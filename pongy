@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong Web Control</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // WebSocket to communicate with the backend (server)
+        const socket = new WebSocket('ws://localhost:5000'); // Assuming your server runs locally on port 5000
+
+        // Send keyboard input to the server
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+                socket.send(event.key);
+            }
+        });
+
+        // Handle server response to update game state
+        socket.onmessage = (event) => {
+            // You can use the game state received to update the game display (paddles, ball, score, etc.)
+            console.log('Game State:', event.data);
+        };
+    </script>
+</body>
+</html>
